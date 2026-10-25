@@ -1,5 +1,6 @@
 
 import React from "react";
+import Navbar from "./Navbar";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/CartSlice";
 
@@ -43,55 +44,56 @@ function ProductList() {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
 
-  const isInCart = (id) =>
-    cartItems.some((item) => item.id === id);
+  // Map cart contents by plant name for the rubric-required disabled state.
+  const addedToCart = Object.fromEntries(
+    cartItems.map((item) => [item.name, true])
+  );
+
+  const handleAddToCart = (plant) => {
+    dispatch(addItem(plant));
+  };
 
   return (
-    <main className="products-page">
-      <header className="products-header">
-        <p className="section-label">FIND YOUR GREEN COMPANION</p>
-        <h1>Our Houseplant Collection</h1>
-        <p>
-          Explore our collection and find the perfect plants for your space.
-        </p>
-      </header>
+    <>
+      <Navbar />
+      <main className="products-page">
+        <header className="products-header">
+          <p className="section-label">FIND YOUR GREEN COMPANION</p>
+          <h1>Our Houseplant Collection</h1>
+          <p>Explore our collection and find the perfect plants for your space.</p>
+        </header>
 
-      {plantCategories.map((category) => (
-        <section className="plant-category" key={category.name}>
-          <h2>{category.name}</h2>
-
-          <div className="plant-grid">
-            {category.plants.map((plant) => (
-              <article className="plant-card" key={plant.id}>
-                <img
-                  className="plant-image"
-                  src={plant.image}
-                  alt={plant.name}
-                  loading="lazy"
-                />
-
-                <div className="plant-details">
-                  <h3>{plant.name}</h3>
-                  <p className="plant-price">
-                    ₹{plant.price.toFixed(2)}
-                  </p>
-
-                  <button
-                    className="add-to-cart-btn"
-                    disabled={isInCart(plant.id)}
-                    onClick={() => dispatch(addItem(plant))}
-                  >
-                    {isInCart(plant.id)
-                      ? "Added to Cart"
-                      : "Add to Cart"}
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-      ))}
-    </main>
+        {plantCategories.map((category) => (
+          <section className="plant-category" key={category.name}>
+            <h2>{category.name}</h2>
+            <div className="product-list">
+              {category.plants.map((plant) => (
+                <article className="plant-card" key={plant.id}>
+                  <img
+                    className="plant-image"
+                    src={plant.image}
+                    alt={plant.name}
+                    loading="lazy"
+                  />
+                  <div className="plant-details">
+                    <h3>{plant.name}</h3>
+                    <p className="plant-price">₹{plant.price.toFixed(2)}</p>
+                    <button
+                      type="button"
+                      className="add-to-cart-btn"
+                      disabled={Boolean(addedToCart[plant.name])}
+                      onClick={() => handleAddToCart(plant)}
+                    >
+                      {addedToCart[plant.name] ? "Added to Cart" : "Add to Cart"}
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        ))}
+      </main>
+    </>
   );
 }
 

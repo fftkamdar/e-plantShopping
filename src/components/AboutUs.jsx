@@ -4,7 +4,7 @@ import React from "react";
 function AboutUs() {
   return (
     <section className="about-section">
-      <div className="about-content">
+      <div className="about-us-container">
         <p className="section-label">OUR STORY</p>
         <h2>Bringing Nature Closer to You</h2>
 

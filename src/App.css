@@ -20,8 +20,7 @@ button {
   font: inherit;
 }
 
-.hero {
-  min-height: 88vh;
+.background-image {
   background-image:
     linear-gradient(
       90deg,
@@ -31,6 +30,10 @@ button {
     url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=85");
   background-size: cover;
   background-position: center;
+}
+
+.hero {
+  min-height: 88vh;
   color: white;
 }
 
@@ -87,7 +90,7 @@ button {
   background: #f7f8f2;
 }
 
-.about-content {
+.about-us-container {
   max-width: 850px;
   margin: 0 auto;
 }
@@ -100,14 +103,14 @@ button {
   margin-bottom: 12px;
 }
 
-.about-content h2 {
+.about-us-container h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.2;
   margin-bottom: 24px;
   color: #24442c;
 }
 
-.about-content p:not(.section-label) {
+.about-us-container p:not(.section-label) {
   margin-bottom: 18px;
   color: #526354;
   font-size: 1.05rem;
@@ -218,7 +221,7 @@ button {
   margin-bottom: 22px;
 }
 
-.plant-grid {
+.product-list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 24px;
@@ -285,7 +288,7 @@ button {
 }
 
 @media (max-width: 850px) {
-  .plant-grid {
+  .product-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -300,7 +303,7 @@ button {
     flex-wrap: wrap;
   }
 
-  .plant-grid {
+  .product-list {
     grid-template-columns: 1fr;
   }
 
@@ -535,4 +538,18 @@ button {
     width: 100%;
     height: 220px;
   }
+}
+
+
+.delete-button {
+  padding: 7px 13px;
+  border: 1px solid #c85b52;
+  border-radius: 7px;
+  background: white;
+  color: #a5342b;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: #fff0ee;
 }
