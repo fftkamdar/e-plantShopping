@@ -3,9 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
+  removeItem,
+  updateQuantity,
 } from "../redux/CartSlice";
 
 function CartItem() {
@@ -41,7 +40,9 @@ function CartItem() {
 
       {cartItems.length === 0 ? (
         <section className="empty-cart">
-          <div className="empty-cart-icon" aria-hidden="true">🪴</div>
+          <div className="empty-cart-icon" aria-hidden="true">
+            🪴
+          </div>
           <h2>Your cart is waiting to bloom!</h2>
           <p>Explore our collection and find your favourite plants.</p>
           <Link className="continue-shopping-btn" to="/plants">
@@ -61,6 +62,7 @@ function CartItem() {
 
                 <div className="cart-item-info">
                   <h2>{item.name}</h2>
+
                   <p className="cart-unit-price">
                     Unit price: {formatPrice(item.price)}
                   </p>
@@ -68,7 +70,14 @@ function CartItem() {
                   <div className="quantity-controls">
                     <button
                       type="button"
-                      onClick={() => dispatch(decreaseQuantity(item.id))}
+                      onClick={() =>
+                        dispatch(
+                          updateQuantity({
+                            id: item.id,
+                            quantity: item.quantity - 1,
+                          })
+                        )
+                      }
                       disabled={item.quantity <= 1}
                       aria-label={`Decrease ${item.name} quantity`}
                     >
@@ -79,7 +88,14 @@ function CartItem() {
 
                     <button
                       type="button"
-                      onClick={() => dispatch(increaseQuantity(item.id))}
+                      onClick={() =>
+                        dispatch(
+                          updateQuantity({
+                            id: item.id,
+                            quantity: item.quantity + 1,
+                          })
+                        )
+                      }
                       aria-label={`Increase ${item.name} quantity`}
                     >
                       +
@@ -93,7 +109,7 @@ function CartItem() {
                   <button
                     type="button"
                     className="remove-item-btn"
-                    onClick={() => dispatch(removeFromCart(item.id))}
+                    onClick={() => dispatch(removeItem(item.id))}
                   >
                     Remove
                   </button>
